@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Details</title>
+  <style>
+    body {
+      background-color: aliceblue;
+      font-family: sans-serif;
+      padding: 20px;
+    }
+    .product-container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .product-container img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    h2 {
+      text-align: center;
+      margin-top: 10px;
+    }
+    .description {
+      margin-top: 15px;
+    }
+    .price {
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .quantity-selector {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+    }
+    .quantity-selector button {
+      font-size: 20px;
+      width: 35px;
+      height: 35px;
+      cursor: pointer;
+    }
+    .quantity-selector input {
+      width: 60px;
+      font-size: 18px;
+      text-align: center;
+    }
+    .buy-btn {
+      display: block;
+      margin: 30px auto 0;
+      padding: 10px 30px;
+      background: #28a745;
+      color: white;
+      font-size: 18px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="product-container" id="product-detail">
+    <!-- Content from JS -->
+  </div>
+
+  <script>
+
+    const products = {
+    
+
+  mango: { name: "Mango Pickle", price: 220, image: "/images/mango.jpg", description: "Spicy and tangy pickle made with raw mangoes and pahadi spices." },
+  cucumber: { name: "Cucumber Pickle", price: 180, image: "/images/cucu.jpg", description: "Crunchy cucumber fermented in mustard oil and native herbs." },
+  lemon: { name: "Lemon Pickle", price: 200, image: "/images/p2p.jpg", description: "Sun-cured lemon chunks in tangy and spicy mix — immunity booster." },
+  redchili: { name: "Red Chili Pickle", price: 240, image: "/images/pp.webp", description: "Fiery and flavorful whole red chili pickle — perfect with parathas." },
+
+  pinksalt: {
+  name: "Himalayan Pink Salt",
+  price: 90,
+  image: "/images/pinksalt.jpg",
+  description: "Natural, mineral-rich pink salt from the Himalayan range. Great for cooking & detox."
+},
+rocksalt: {
+  name: "Rock Salt (Sendha Namak)",
+  price: 70,
+  image: "/images/salt3.jpg",
+  description: "Unrefined salt, ideal for fasting & ayurvedic use. Packed with essential minerals."
+},
+blacksalt: {
+  name: "Black Salt (Kala Namak)",
+  price: 60,
+  image: "/images/salt2.webp",
+  description: "Tangy, digestive-friendly salt used in chaat, salads & drinks."
+},
+mushrooms: {
+  name: "Wild Edible Mushrooms",
+  price: 480,
+  image: "/images/edible-mashrooms.jpg",
+  description: "Forest-harvested mushrooms from Uttarakhand. Rich in flavor & nutrition."
+},
+
+      hemp: {
+        name: "Hemp Oil",
+        price: 200,
+        image: "/images/hempoil.jpg",
+        description: "Cold-pressed oil made from hemp seeds. Rich in omega-3 and omega-6 fatty acids."
+      },
+      chameli: {
+        name: "Chameli Ka Tel (Jasmine Oil)",
+        price: 250,
+        image: "/images/chamelikatel.webp",
+        description: "Aromatic oil used for massage, skin care, and stress relief."
+      },
+      sarson: {
+        name: "Sarson Ka Tel (Mustard Oil)",
+        price: 180,
+        image: "/images/sarso.jpg",
+        description: "Traditional cooking oil with antimicrobial properties and rich flavor."
+      },
+      honey: {
+        name: "Raw Organic Honey",
+        price: 400,
+        image: "/images/honey1.webp",
+        description: "Unprocessed honey collected from Himalayan wildflowers. Natural and nutrient-rich."
+      }
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const key = params.get("product");
+    const product = products[key];
+
+    if (product) {
+      document.getElementById("product-detail").innerHTML = `
+        <img src="${product.image}" alt="${product.name}">
+        <h2>${product.name}</h2>
+        <p class="description">${product.description}</p>
+        <p class="price">Price: ₹${product.price}/kg</p>
+        <div class="quantity-selector">
+          <button onclick="changeQuantity(-1)">-</button>
+          <input type="number" id="quantity" value="1" min="1" />
+          <button onclick="changeQuantity(1)">+</button>
+        </div>
+        <button class="buy-btn" onclick="buyNow()">Buy Now</button>
+      `;
+    } else {
+      document.getElementById("product-detail").innerHTML = "<p>Product not found.</p>";
+    }
+
+    function changeQuantity(delta) {
+      const input = document.getElementById("quantity");
+      let val = parseInt(input.value) + delta;
+      if (val < 1) val = 1;
+      input.value = val;
+    }
+
+    function buyNow() {
+      const qty = parseInt(document.getElementById("quantity").value);
+      const total = qty * product.price;
+      alert(`You have ordered ${qty} kg of ${product.name} for ₹${total}`);
+    }
+  </script>
+</body>
+</html>
